@@ -1,12 +1,19 @@
-from fastapi import FastAPI, Response, status, HTTPException
+from fastapi import FastAPI, Response, status, HTTPException, Depends
 from fastapi.params import Body
 from pydantic import BaseModel
 from typing import Optional
 from random import randrange
 import psycopg
+from sqlalchemy.orm import Session
+from . import models
+from .database import engine, get_db
 
+# Create the database tables
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+
 
 class Post(BaseModel):
     title: str
@@ -41,7 +48,19 @@ def get_db_connection():
 @app.get("/")
 async def read_root():
     return {"message": "Salam Aleykoum all the World"}
+####
+## TEST SQLALCHEMY CONNECTION
+##
 
+@app.get("/sqlalchemy_test")
+def sqlalchemy_test(db: Session = Depends(get_db)):
+    # posts = db.query(models.Post).all()
+    # print(posts)
+    return {"Status": "SQLAlchemy is connected!"}
+
+
+
+## Get all posts
 @app.get("/posts")
 async def get_posts():
     with get_db_connection() as conn:
