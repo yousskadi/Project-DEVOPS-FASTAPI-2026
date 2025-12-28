@@ -52,45 +52,53 @@ async def read_root():
 ## TEST SQLALCHEMY CONNECTION
 ##
 
-@app.get("/sqlalchemy_test")
+@app.get("/posts")
 def sqlalchemy_test(db: Session = Depends(get_db)):
-    # posts = db.query(models.Post).all()
-    # print(posts)
-    return {"Status": "SQLAlchemy is connected!"}
+    posts = db.query(models.Post).all()
+    ## ==> SELECT * FROM posts
+    print(posts)
+    return {"data": posts}
 
 
 
 ## Get all posts
-@app.get("/posts")
-async def get_posts():
-    with get_db_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute("SELECT * FROM posts")
-            posts = cur.fetchall()
-            print(posts)
-    return {"data":
-            # change to model_dump() to convert Pydantic model to dictionary
-            [{"id": post[0], "title": post[1], "content": post[2], "published": post[3], "created_at": post[4] } for post in posts]}
+# @app.get("/posts")
+# async def get_posts():
+#     with get_db_connection() as conn:
+#         with conn.cursor() as cur:
+#             cur.execute("SELECT * FROM posts")
+#             posts = cur.fetchall()
+#             print(posts)
+#     return {"data":
+#             # change to model_dump() to convert Pydantic model to dictionary
+#             [{"id": post[0], "title": post[1], "content": post[2], "published": post[3], "created_at": post[4] } for post in posts]}
 
 ## Get a specific post
 @app.get("/posts/{id}")
-async def get_post(id: int):
-    with get_db_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute("SELECT * FROM posts WHERE id = %s", (id,))
-            post = cur.fetchone()
+async def get_post(id: int, db: Session = Depends(get_db)):
+    # with get_db_connection() as conn:
+    #     with conn.cursor() as cur:
+    #         cur.execute("SELECT * FROM posts WHERE id = %s", (id,))
+    #         post = cur.fetchone()
+    # if post is None:
+    #     raise HTTPException(
+    #         status_code=status.HTTP_404_NOT_FOUND,
+    #         detail=f"Post with id: {id} was not found"
+    #         )
+    ## Using SQLAlchemy ORM
+    post = db.query(models.Post).filter(models.Post.id == id).first()
     if post is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Post with id: {id} was not found"
-            )
-
-    return {"post_detail":{
-        "id": post[0],
-        "title": post[1],
-        "content": post[2],
-        "published": post[3],
-        "created_at": post[4]
+           )
+    return {"post_detail":
+        {
+        "id": post.id,
+        "title": post.title,
+        "content": post.content,
+        "published": post.published,
+        "created_at": post.created_at
         }
     }
 
@@ -112,74 +120,76 @@ async def get_post(id: int):
 
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
-async def create_post(post: Post):
-    with get_db_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO posts (title, content, published)
-                VALUES (%s, %s, %s)
-                RETURNING id, title, content, published
-                """,
-                (post.title, post.content, post.published)
-            )
+async def create_post(post: Post, db: Session = Depends(get_db)):
+    # with get_db_connection() as conn:
+    #     with conn.cursor() as cur:
+    #         cur.execute(
+    #             """
+    #             INSERT INTO posts (title, content, published)
+    #             VALUES (%s, %s, %s)
+    #             RETURNING id, title, content, published
+    #             """,
+    #             (post.title, post.content, post.published)
+    #         )
 
-            new_post = cur.fetchone()
+    #         new_post = cur.fetchone()
 
-
+## Using SQLAlchemy ORM
+    #new_post = models.Post(title=post.title, content=post.content, published=post.published)
+    new_post = models.Post(**post.model_dump())  # unpacking the post object
+    ## Add the new post to the session
+    db.add(new_post)
+    db.commit()
+    db.refresh(new_post)
     return {"data":
-            {"id": new_post[0],
-            "title": new_post[1],
-            "content": new_post[2],
-            "published": new_post[3]
+            {"id": new_post.id,
+            "title": new_post.title,
+            "content": new_post.content,
+            "published": new_post.published,
+            "created_at": new_post.created_at
             }
         }
 
 ### Delete a post ###
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_post(id: int):
-    with get_db_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                "DELETE FROM posts WHERE id = %s RETURNING *",
-                (id,)
-            )
-            deleted_post = cur.fetchone()
-    if deleted_post is None:
+async def delete_post(id: int, db: Session = Depends(get_db)):
+
+    deleted_rows = (
+        db.query(models.Post)
+        .filter(models.Post.id == id)
+        .first()
+    )
+    if deleted_rows is None:
         raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Post with id: {id} does not exist"
                 )
+    db.delete(deleted_rows)
+    db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 ### Update a post ###
 @app.put("/posts/{id}")
-async def update_post(id: int, post: Post):
-    with get_db_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                """
-                UPDATE posts
-                SET title = %s,
-                    content = %s,
-                    published = %s
-                WHERE id = %s
-                RETURNING id, title, content, published
-                """,
-                (post.title, post.content, post.published, id)
-            )
-            updated_post = cur.fetchone()
+def update_post(id: int, post: Post, db: Session = Depends(get_db)):
+    #
+    updated_post = (
+        db.query(models.Post)
+        .filter(models.Post.id == id)
+        .first()
+         )
+    #  vérifier existence
     if updated_post is None:
         raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Post with id: {id} does not exist"
                 )
+    # mettre à jour les attributs
+    #updated_post.title = post.title
+    updated_post.content = post.content
+    updated_post.published = post.published
+    #updated_post.update({'title': 'hi from Egypt', 'content': 'This awesome'}, synchronize_session=False)
+    db.commit()
+    # Refresh
+    db.refresh(updated_post)
 
-    return {"data":
-            {"id": updated_post[0],
-            "title": updated_post[1],
-            "content": updated_post[2],
-            "published": updated_post[3],
-            "created_at": post[4]
-            }
-        }
+    return updated_post
