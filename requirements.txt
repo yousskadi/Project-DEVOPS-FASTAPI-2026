@@ -1,0 +1,17 @@
+## A vérifier
+
+fastapi
+uvicorn[standard]
+
+# PostgreSQL driver (sans ORM)
+psycopg[binary]
+
+# Environment variables
+python-dotenv
+
+# Validation / settings
+pydantic
+
+# Tests (optionnel mais recommandé)
+pytest
+httpx
