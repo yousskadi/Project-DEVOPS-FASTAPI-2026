@@ -11,6 +11,13 @@ python-dotenv
 
 # Validation / settings
 pydantic
+email-validator
+
+## hashing passwords
+# passlib[bcrypt] ==> issue with some systems, so we install separately
+passlib==1.7.4 
+bcrypt==4.0.1
+
 
 # Tests (optionnel mais recommandé)
 pytest
@@ -18,4 +25,4 @@ httpx
 
 ## ORM
 sqlalchemy>=2.0
-alembic>=2.0   # pour les migrations
+alembic>=1.17.0   # pour les migrations
