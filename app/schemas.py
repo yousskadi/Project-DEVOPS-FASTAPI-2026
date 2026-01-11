@@ -10,7 +10,7 @@ class PostBase(BaseModel):
 
 # Create separate schemas for Create and Update operations
 class PostCreate(PostBase):
-    pass    
+    pass
 
 ## Create Response schema
 ## this schema includes PostBase fields + id and created_at
@@ -21,12 +21,13 @@ class Post(PostBase):
     class Config:
         orm_mode = True
 
-
+#### USERS SCHEMA #######
 # User Schemas
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
 
+## User Response Schema (don't response the password)
 class UserOUT(BaseModel):
     id: int
     email: EmailStr
