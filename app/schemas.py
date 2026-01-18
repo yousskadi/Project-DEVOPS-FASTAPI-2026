@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
+from typing import Optional
 
 
 # Create a base schema to avoid code duplication
@@ -40,4 +41,11 @@ class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
-    
+## TOKEN schema
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+## TOKEN Data
+class TokenData(BaseModel):
+    id: Optional[str] = None

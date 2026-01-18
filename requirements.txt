@@ -29,3 +29,6 @@ alembic>=1.17.0   # pour les migrations
 
 ## PyJWT to generate and verify the JWT tokens in Python.
 python-jose[cryptography]
+
+## 
+python-multipart
