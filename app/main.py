@@ -7,7 +7,7 @@ import psycopg
 from sqlalchemy.orm import Session
 from . import models, schemas, utils
 from .database import engine, get_db
-from .routers import post, user
+from .routers import post, user, auth
 
 #from passlib.context import CryptContext
 
@@ -34,3 +34,5 @@ async def read_root():
 app.include_router(post.router)
 # Add access to user router
 app.include_router(user.router)
+# Add access to auth router
+app.include_router(auth.router)

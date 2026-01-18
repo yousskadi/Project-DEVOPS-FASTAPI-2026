@@ -15,7 +15,7 @@ email-validator
 
 ## hashing passwords
 # passlib[bcrypt] ==> issue with some systems, so we install separately
-passlib==1.7.4 
+passlib==1.7.4
 bcrypt==4.0.1
 
 
@@ -26,3 +26,6 @@ httpx
 ## ORM
 sqlalchemy>=2.0
 alembic>=1.17.0   # pour les migrations
+
+## PyJWT to generate and verify the JWT tokens in Python.
+python-jose[cryptography]
