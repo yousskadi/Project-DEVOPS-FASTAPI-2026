@@ -1,4 +1,4 @@
-from .. import models, schemas, utils
+from .. import models, schemas, utils, oauth2
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 from ..database import get_db
@@ -14,7 +14,7 @@ router = APIRouter(
 ########################################
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOUT)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db), user_id: int = Depends (oauth2.get_current_user)):
     # Hash the password - user.password
     # print("PASSWORD LENGTH:", len(user.password.encode("utf-8")))
 
@@ -39,13 +39,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 ### Get all users ###
 ## we need a List so List[schemas.UserOUT]
 @router.get("/", response_model=List[schemas.UserOUT])
-def get_users(db: Session = Depends(get_db)):
+def get_users(db: Session = Depends(get_db), user_id: int = Depends (oauth2.get_current_user)):
     users = db.query(models.User).all()
     return users
 
 ### Get a specific user with id
 @router.get("/{id}", response_model=schemas.UserOUT)
-def get_user(id: int, db: Session = Depends(get_db)):
+def get_user(id: int, db: Session = Depends(get_db), user_id: int = Depends (oauth2.get_current_user)):
     user = db.query(models.User).filter(models.User.id == id).first()
     if not user:
         raise HTTPException(
