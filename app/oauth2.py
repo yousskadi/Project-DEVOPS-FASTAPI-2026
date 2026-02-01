@@ -1,5 +1,7 @@
 from jose import JWTError, jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
+from app import models
 from . import schemas, database
 from fastapi import HTTPException
 from fastapi import Depends, status, HTTPException
@@ -21,7 +23,7 @@ def create_access_token(data: dict):
     ## Copy the data to avoid modifying the original data
     to_encode = data.copy()
     # Add the expiration time to the token
-    expire = datetime.now() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
 
     # Encode the token
@@ -49,4 +51,6 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
                                           detail="Could not validate credentials",
                                           headers={"WWW-Authenticate": "Bearer"})
     token = verify_access_token(token, credentials_exception)
-    return token.id
+    user = db.query(models.User).filter(models.User.id == token.id).first()
+    #print(f"Current user: {user.email}")
+    return user
