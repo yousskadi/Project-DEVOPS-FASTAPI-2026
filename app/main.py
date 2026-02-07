@@ -1,7 +1,15 @@
 from fastapi import FastAPI
+
+from app.oauth2 import SECRET_KEY
 from . import models
 from .database import engine
 from .routers import post, user, auth
+from pydantic_settings import BaseSettings
+from .config import settings
+
+
+
+
 
 #from passlib.context import CryptContext
 
