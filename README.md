@@ -27,3 +27,16 @@ pip install -r requirements.txt
 ```bash
 uvicorn app.main:app --reload --port 8080
 ```
+
+
+## Query Parameters
+What's a query parameters ?
+Query parameters are a way to send additional information to the server when making a request. They are appended to the URL and typically follow a `?` character. Each parameter is a key-value pair, and multiple parameters are separated by `&`. For example:
+Use Postman to test the API
+example for my api : with limit,skip, search ?
+    {{URL}}posts?limit=3
+    {{URL}}posts?search=Aquida
+    {{URL}}posts?search=Aquida&limit=3&skip=2
+if search with a space in the URL add %20
+  to serach "seminars fiqh"
+    {{URL}}posts?search=seminars%20fiqh

@@ -1,7 +1,35 @@
+from venv import create
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional
 
+
+#########################
+#### USERS SCHEMA #######
+#########################
+
+# User Schemas
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+
+## User Response Schema (don't response the password)
+class UserOUT(BaseModel):
+    id: int
+    email: EmailStr
+    created_at: datetime
+    class Config:
+        from_attributes = True
+
+## User login
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
+#########################
+#### POSTS SCHEMA #######
+#########################
 
 # Create a base schema to avoid code duplication
 class PostBase(BaseModel):
@@ -19,28 +47,12 @@ class Post(PostBase):
     id: int
     created_at: datetime
     user_id: int
-    # orm_mode to work with ORM objects
+    owner: UserOUT
+    # from_attributes to work with ORM objects
     class Config:
-        orm_mode = True
+        from_attributes = True
 
-#### USERS SCHEMA #######
-# User Schemas
-class UserCreate(BaseModel):
-    email: EmailStr
-    password: str
 
-## User Response Schema (don't response the password)
-class UserOUT(BaseModel):
-    id: int
-    email: EmailStr
-
-    class Config:
-        orm_mode = True
-
-## User login
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
 
 ## TOKEN schema
 class Token(BaseModel):
