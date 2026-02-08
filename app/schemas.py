@@ -1,5 +1,5 @@
 from venv import create
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, conint
 from datetime import datetime
 from typing import Optional
 
@@ -62,3 +62,9 @@ class Token(BaseModel):
 ## TOKEN Data
 class TokenData(BaseModel):
     id: Optional[int] = None
+
+
+## Votes Schema
+class Vote(BaseModel):
+    post_id: int
+    dir: conint(ge=0, le=1)  # direction of the vote, 1 for upvote, 0 for downvote

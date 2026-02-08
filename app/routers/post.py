@@ -13,7 +13,11 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=List[schemas.Post])
-def sqlalchemy_test(db: Session = Depends(get_db), current_user: int = Depends (oauth2.get_current_user), limit: int = 10, skip: int = 0, search: Optional[str] = ""):
+def sqlalchemy_test(db: Session = Depends(get_db),
+                    current_user: int = Depends (oauth2.get_current_user),
+                    limit: int = 10,
+                    skip: int = 0,
+                    search: Optional[str] = ""):
     ## Query without any filter ==> SELECT * FROM posts
     #posts = db.query(models.Post).all()
     ##  Query with limit filter
@@ -30,7 +34,8 @@ def sqlalchemy_test(db: Session = Depends(get_db), current_user: int = Depends (
 
 ## Get a specific post
 @router.get("/{id}", response_model=schemas.Post)
-async def get_post(id: int, db: Session = Depends(get_db), current_user: int = Depends (oauth2.get_current_user)):
+async def get_post(id: int, db: Session = Depends(get_db),
+                   current_user: int = Depends (oauth2.get_current_user)):
 
     ## Using SQLAlchemy ORM
     post = db.query(models.Post).filter(models.Post.id == id).first()
@@ -58,7 +63,8 @@ async def get_post(id: int, db: Session = Depends(get_db), current_user: int = D
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
-def create_post(post: schemas.PostCreate, db: Session = Depends(get_db), current_user: int = Depends (oauth2.get_current_user)):
+def create_post(post: schemas.PostCreate,
+                db: Session = Depends(get_db), current_user: int = Depends (oauth2.get_current_user)):
 
 ## Using SQLAlchemy ORM
     #new_post = models.Post(title=post.title, content=post.content, published=post.published)
