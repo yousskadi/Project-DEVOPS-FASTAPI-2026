@@ -1,7 +1,7 @@
 from venv import create
 from pydantic import BaseModel, EmailStr, conint
 from datetime import datetime
-from typing import Optional
+from typing import Literal, Optional
 
 
 #########################
@@ -52,6 +52,12 @@ class Post(PostBase):
     class Config:
         from_attributes = True
 
+## Post Out Schema to return post with number of votes
+class PostOut(BaseModel):
+    Post: Post
+    votes: int
+    class Config:
+        from_attributes = True
 
 
 ## TOKEN schema
@@ -67,4 +73,5 @@ class TokenData(BaseModel):
 ## Votes Schema
 class Vote(BaseModel):
     post_id: int
-    dir: conint(ge=0, le=1)  # direction of the vote, 1 for upvote, 0 for downvote
+    #dir: conint(ge=0, le=1)  # direction of the vote, 1 for upvote, 0 for downvote
+    dir: Literal[0, 1]

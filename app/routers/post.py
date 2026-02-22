@@ -1,5 +1,6 @@
 ### POSTS route
 
+from sqlalchemy import func
 from .. import models, schemas, oauth2
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
@@ -12,7 +13,7 @@ router = APIRouter(
     tags=["Posts"]
 )
 
-@router.get("/", response_model=List[schemas.Post])
+@router.get("/", response_model=List[schemas.PostOut])
 def sqlalchemy_test(db: Session = Depends(get_db),
                     current_user: int = Depends (oauth2.get_current_user),
                     limit: int = 10,
@@ -25,7 +26,9 @@ def sqlalchemy_test(db: Session = Depends(get_db),
     ## Query with filter only check the post your own (current_id)
     #posts = db.query(models.Post).filter(models.Post.user_id == current_user.id).all()
     ## Query with search filter
-    posts = db.query(models.Post).filter(models.Post.title.contains(search)).all()
+    # posts = db.query(models.Post).filter(models.Post.title.contains(search)).all()
+
+    posts = db.query(models.Post, func.count(models.Votes.post_id).label("votes")).join(models.Votes, models.Votes.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
 
     return  posts
 
@@ -33,12 +36,13 @@ def sqlalchemy_test(db: Session = Depends(get_db),
 
 
 ## Get a specific post
-@router.get("/{id}", response_model=schemas.Post)
+@router.get("/{id}", response_model=schemas.PostOut)
 async def get_post(id: int, db: Session = Depends(get_db),
                    current_user: int = Depends (oauth2.get_current_user)):
 
     ## Using SQLAlchemy ORM
-    post = db.query(models.Post).filter(models.Post.id == id).first()
+    #post = db.query(models.Post).filter(models.Post.id == id).first()
+    post = db.query(models.Post, func.count(models.Votes.post_id).label("votes")).join(models.Votes, models.Votes.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first()
     if post is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
