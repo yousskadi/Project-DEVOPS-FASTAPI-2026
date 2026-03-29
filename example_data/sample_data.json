@@ -1,0 +1,85 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "john@example.com",
+      "password": "password123",
+      "description": "Sample user for testing"
+    },
+    {
+      "id": 2,
+      "email": "jane@example.com",
+      "password": "securepass456",
+      "description": "Another test user"
+    },
+    {
+      "id": 3,
+      "email": "bob@example.com",
+      "password": "bobpass789",
+      "description": "Third test user"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Welcome to My Blog",
+      "content": "This is my first blog post. I'm excited to share my thoughts and ideas with you all!",
+      "published": true,
+      "user_id": 1
+    },
+    {
+      "id": 2,
+      "title": "FastAPI Tips and Tricks",
+      "content": "Learn how to build fast and reliable APIs using FastAPI framework. It's a modern web framework for building APIs with Python.",
+      "published": true,
+      "user_id": 1
+    },
+    {
+      "id": 3,
+      "title": "Database Design Best Practices",
+      "content": "In this post, I'll share some best practices for designing efficient and scalable databases.",
+      "published": true,
+      "user_id": 2
+    },
+    {
+      "id": 4,
+      "title": "Getting Started with SQLAlchemy",
+      "content": "SQLAlchemy is a powerful Python SQL toolkit and Object Relational Mapper (ORM). Let's explore its features!",
+      "published": true,
+      "user_id": 2
+    },
+    {
+      "id": 5,
+      "title": "Understanding JWT Tokens",
+      "content": "JWT (JSON Web Tokens) are a popular way to implement authentication in web applications. Here's how they work...",
+      "published": true,
+      "user_id": 3
+    }
+  ],
+  "votes": [
+    {
+      "user_id": 1,
+      "post_id": 3
+    },
+    {
+      "user_id": 1,
+      "post_id": 4
+    },
+    {
+      "user_id": 2,
+      "post_id": 1
+    },
+    {
+      "user_id": 2,
+      "post_id": 5
+    },
+    {
+      "user_id": 3,
+      "post_id": 1
+    },
+    {
+      "user_id": 3,
+      "post_id": 2
+    }
+  ]
+}

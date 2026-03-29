@@ -3,7 +3,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, TIMESTAMP, 
 from sqlalchemy.orm import relationship
 
 class Post(Base):
-    __tablename__ = "posts2"
+    __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
@@ -11,7 +11,7 @@ class Post(Base):
     published = Column(Boolean, server_default='TRUE')
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    # fecth the owner of the posts
+    # fetch the owner of the posts
     owner = relationship("User")
 
 # Create User model Table
@@ -30,5 +30,5 @@ class User(Base):
 class Votes(Base):
     __tablename__ = "votes"
 
-    post_id = Column(Integer, ForeignKey("posts2.id", ondelete="CASCADE"), primary_key=True)
+    post_id = Column(Integer, ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)

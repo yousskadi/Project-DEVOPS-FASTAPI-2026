@@ -134,7 +134,7 @@ def update_post(id: int, post: schemas.PostCreate, db: Session = Depends(get_db)
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
 
     # mettre à jour les attributs
-    #updated_post.title = post.title
+    updated_post.title = post.title
     updated_post.content = post.content
     updated_post.published = post.published
     #updated_post.update({'title': 'hi from Egypt', 'content': 'This awesome'}, synchronize_session=False)
