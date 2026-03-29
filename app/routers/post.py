@@ -13,6 +13,11 @@ router = APIRouter(
     tags=["Posts"]
 )
 
+## Note: To secure an endpoint, include "current_user: int = Depends(oauth2.get_current_user)"
+## as a parameter in the function definition
+
+
+
 @router.get("/", response_model=List[schemas.PostOut])
 def sqlalchemy_test(db: Session = Depends(get_db),
                     current_user: int = Depends (oauth2.get_current_user),
