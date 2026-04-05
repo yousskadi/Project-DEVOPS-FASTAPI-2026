@@ -1,3 +1,4 @@
+
 from .database import Base
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, TIMESTAMP, text
 from sqlalchemy.orm import relationship
@@ -24,6 +25,7 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
 
+    phone_number = Column(String, nullable=True)
 
 # Create Model Votes
 

@@ -14,7 +14,9 @@ from .config import settings
 #from passlib.context import CryptContext
 
 # Create the database tables
-models.Base.metadata.create_all(bind=engine)
+# no needs because alembic
+#models.Base.metadata.drop_all(bind=engine)
+#models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
