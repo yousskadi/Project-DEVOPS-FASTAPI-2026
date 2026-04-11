@@ -99,8 +99,19 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
 6. **Lancer l'application**
+
+en local
 ```bash
 uvicorn app.main:app --reload --port 8080
+```
+en production
+```bash
+uvicorn --host 0.0.0.0 app.main:app --reload --port 8080
+```
+
+6-bis **Utiliser gunicorn
+```bash
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8080
 ```
 
 L'API sera accessible sur : `http://localhost:8080`

@@ -2,6 +2,7 @@
 
 fastapi
 uvicorn[standard]
+gunicorn
 
 # PostgreSQL driver (sans ORM)
 psycopg[binary]
@@ -33,3 +34,6 @@ python-jose[cryptography]
 
 ##
 python-multipart
+
+http-tools==2.0.0
+uvloop
