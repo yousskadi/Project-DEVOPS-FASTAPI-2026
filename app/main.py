@@ -47,4 +47,4 @@ app.include_router(votes.router)
 
 @app.get("/")
 async def read_root():
-    return {"message": "Salam Aleykoum all the World"}
+    return {"message": "Hello all the World"}
