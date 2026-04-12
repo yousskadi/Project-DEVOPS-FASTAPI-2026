@@ -179,7 +179,30 @@ server {
     }
 }
 ```
+## nginx with ssl
 
+```
+server {
+    listen 443 ssl;
+    server_name fastapi.devopsyouss.com;
+
+    ssl_certificate /etc/nginx/ssl/cloudflare.crt;
+    ssl_certificate_key /etc/nginx/ssl/cloudflare.key;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+}
+```
 ---
 
 ## 📦 Avec Systemd (service Linux)
