@@ -1,5 +1,4 @@
-from venv import create
-from pydantic import BaseModel, EmailStr, conint
+from pydantic import BaseModel, EmailStr, ConfigDict
 from datetime import datetime
 from typing import Literal, Optional
 
@@ -15,11 +14,10 @@ class UserCreate(BaseModel):
 
 ## User Response Schema (don't response the password)
 class UserOUT(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     email: EmailStr
     created_at: datetime
-    class Config:
-        from_attributes = True
 
 ## User login
 class UserLogin(BaseModel):
@@ -44,20 +42,17 @@ class PostCreate(PostBase):
 ## Create Response schema
 ## this schema includes PostBase fields + id and created_at
 class Post(PostBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     created_at: datetime
     user_id: int
     owner: UserOUT
-    # from_attributes to work with ORM objects
-    class Config:
-        from_attributes = True
 
 ## Post Out Schema to return post with number of votes
 class PostOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     Post: Post
     votes: int
-    class Config:
-        from_attributes = True
 
 
 ## TOKEN schema
