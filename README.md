@@ -267,6 +267,12 @@ GET /posts?search=seminars%20fiqh
 
 Accéder à `http://localhost:8080/docs` pour une interface interactive.
 
+### Peupler la db de données avec Posts,Votes,Users
+```bash
+ python3 -m example_data.seed_db
+```
+
+
 ## 🔒 Sécurité
 
 - Mots de passe hashés avec **bcrypt**
