@@ -1,0 +1,39 @@
+## A vérifier
+
+fastapi
+uvicorn[standard]
+gunicorn
+
+# PostgreSQL driver (sans ORM)
+psycopg[binary]
+
+# Environment variables
+python-dotenv
+
+# Validation / settings
+pydantic
+email-validator
+pydantic-settings
+
+## hashing passwords
+# passlib[bcrypt] ==> issue with some systems, so we install separately
+passlib
+bcrypt
+
+
+# Tests (optionnel mais recommandé)
+pytest
+httpx
+
+## ORM
+sqlalchemy
+alembic   # pour les migrations
+
+## PyJWT to generate and verify the JWT tokens in Python.
+python-jose[cryptography]
+
+##
+python-multipart
+
+http-tools==2.0.0
+uvloop

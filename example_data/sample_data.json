@@ -1,0 +1,202 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "john@example.com",
+      "password": "password123"
+    },
+    {
+      "id": 2,
+      "email": "jane@example.com",
+      "password": "securepass456"
+    },
+    {
+      "id": 3,
+      "email": "bob@example.com",
+      "password": "bobpass789"
+    },
+    {
+      "id": 4,
+      "email": "alice@example.com",
+      "password": "alicepass321"
+    },
+    {
+      "id": 5,
+      "email": "charlie@example.com",
+      "password": "charlie999"
+    },
+    {
+      "id": 6,
+      "email": "diana@example.com",
+      "password": "diana555"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Welcome to My Blog",
+      "content": "This is my first blog post. I'm excited to share my thoughts and ideas with you all!",
+      "published": true,
+      "user_id": 1
+    },
+    {
+      "id": 2,
+      "title": "FastAPI Tips and Tricks",
+      "content": "Learn how to build fast and reliable APIs using FastAPI framework. It's a modern web framework for building APIs with Python.",
+      "published": true,
+      "user_id": 1
+    },
+    {
+      "id": 3,
+      "title": "Database Design Best Practices",
+      "content": "In this post, I'll share some best practices for designing efficient and scalable databases.",
+      "published": true,
+      "user_id": 2
+    },
+    {
+      "id": 4,
+      "title": "Getting Started with SQLAlchemy",
+      "content": "SQLAlchemy is a powerful Python SQL toolkit and Object Relational Mapper (ORM). Let's explore its features!",
+      "published": true,
+      "user_id": 2
+    },
+    {
+      "id": 5,
+      "title": "Understanding JWT Tokens",
+      "content": "JWT (JSON Web Tokens) are a popular way to implement authentication in web applications. Here's how they work...",
+      "published": true,
+      "user_id": 3
+    },
+    {
+      "id": 6,
+      "title": "Deploying Python Applications with Docker",
+      "content": "Docker is a containerization platform that makes deploying applications easier and more reliable. Let me show you how to use it.",
+      "published": true,
+      "user_id": 3
+    },
+    {
+      "id": 7,
+      "title": "REST API Design Patterns",
+      "content": "Designing a REST API requires careful planning. In this article, I'll discuss best practices and common patterns.",
+      "published": true,
+      "user_id": 4
+    },
+    {
+      "id": 8,
+      "title": "Microservices Architecture",
+      "content": "Microservices architecture is a way to structure your application as a collection of loosely coupled, independently deployable services.",
+      "published": true,
+      "user_id": 4
+    },
+    {
+      "id": 9,
+      "title": "Python Testing with pytest",
+      "content": "Writing good tests is crucial for maintaining code quality. pytest is an excellent testing framework for Python.",
+      "published": true,
+      "user_id": 5
+    },
+    {
+      "id": 10,
+      "title": "CI/CD Pipelines with GitHub Actions",
+      "content": "Continuous Integration and Continuous Deployment can streamline your development workflow. Let's explore GitHub Actions.",
+      "published": true,
+      "user_id": 5
+    },
+    {
+      "id": 11,
+      "title": "Advanced SQL Query Optimization",
+      "content": "Slow queries can cripple your application. Here are some techniques to optimize your SQL queries for better performance.",
+      "published": true,
+      "user_id": 6
+    },
+    {
+      "id": 12,
+      "title": "Web Security Best Practices",
+      "content": "Security should be a top priority when building web applications. Let's discuss OWASP Top 10 and how to protect your app.",
+      "published": true,
+      "user_id": 6
+    }
+  ],
+  "votes": [
+    {
+      "user_id": 1,
+      "post_id": 3
+    },
+    {
+      "user_id": 1,
+      "post_id": 4
+    },
+    {
+      "user_id": 1,
+      "post_id": 5
+    },
+    {
+      "user_id": 2,
+      "post_id": 1
+    },
+    {
+      "user_id": 2,
+      "post_id": 5
+    },
+    {
+      "user_id": 2,
+      "post_id": 6
+    },
+    {
+      "user_id": 3,
+      "post_id": 1
+    },
+    {
+      "user_id": 3,
+      "post_id": 2
+    },
+    {
+      "user_id": 3,
+      "post_id": 7
+    },
+    {
+      "user_id": 4,
+      "post_id": 1
+    },
+    {
+      "user_id": 4,
+      "post_id": 2
+    },
+    {
+      "user_id": 4,
+      "post_id": 3
+    },
+    {
+      "user_id": 4,
+      "post_id": 9
+    },
+    {
+      "user_id": 5,
+      "post_id": 4
+    },
+    {
+      "user_id": 5,
+      "post_id": 7
+    },
+    {
+      "user_id": 5,
+      "post_id": 8
+    },
+    {
+      "user_id": 6,
+      "post_id": 2
+    },
+    {
+      "user_id": 6,
+      "post_id": 6
+    },
+    {
+      "user_id": 6,
+      "post_id": 9
+    },
+    {
+      "user_id": 6,
+      "post_id": 10
+    }
+  ]
+}
