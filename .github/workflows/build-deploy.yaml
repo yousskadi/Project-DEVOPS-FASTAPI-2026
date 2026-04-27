@@ -1,0 +1,12 @@
+name: Build & Deploy Code
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Pulling git repo
+        uses: actions/checkout@v4
+      - name: Salam aleykoum
+        run: echo "Salam aleykoum"
