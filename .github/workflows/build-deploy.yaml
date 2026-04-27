@@ -4,15 +4,17 @@ on: [push, pull_request]
 
 jobs:
   build:
+    environment:
+      name: testing
     env:
-      DB_HOSTNAME: localhost
-      DB_PORT: 5432
-      DB_NAME: fastapi_db
-      DB_PASSWORD: fastapi
-      DB_USERNAME: fastapi
-      SECRET_KEY: 07d25e094faa6ca2556c818162b7a9563b93f7099f3f0f4caa6cf63b88e8d3e7
-      ALGORITHM: HS256
-      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+      DB_HOSTNAME: ${{secrets.DB_HOSTNAME}}
+      DB_PORT: ${{vars.DB_PORT}}
+      DB_NAME: ${{vars.DB_NAME}}
+      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+      DB_USERNAME: ${{vars.DB_USERNAME}}
+      SECRET_KEY: ${{secrets.SECRET_KEY}}
+      ALGORITHM: ${{vars.ALGORITHM}}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{vars.ACCESS_TOKEN_EXPIRE_MINUTES}}
     runs-on: ubuntu-24.04
     steps:
       - name: Pulling git repo
