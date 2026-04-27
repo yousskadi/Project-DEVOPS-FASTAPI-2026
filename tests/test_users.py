@@ -81,3 +81,8 @@ def test_get_user_unauthorized(client):
     res = client.get("/users/1")
     print(res.json())
     assert res.status_code == status.HTTP_401_UNAUTHORIZED
+
+def test_incorrect_login(authorized_client):
+    res = authorized_client.post("/login", data={"username":"fakeemail@gmail.com", "password":"fakepassword"})
+    assert res.status_code == status.HTTP_403_FORBIDDEN
+    assert res.json().get('detail') == 'Invalid Credentials'

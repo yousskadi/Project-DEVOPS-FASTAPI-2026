@@ -120,13 +120,13 @@ def test_create_post_unauthorized(client):
 def test_create_post_missing_title(authorized_client):
     """Cas d'erreur : champ title manquant → 422 UNPROCESSABLE ENTITY."""
     res = authorized_client.post("/posts/", json={"content": "No title here"})
-    assert res.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert res.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
 
 def test_create_post_missing_content(authorized_client):
     """Cas d'erreur : champ content manquant → 422 UNPROCESSABLE ENTITY."""
     res = authorized_client.post("/posts/", json={"title": "No content here"})
-    assert res.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert res.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
 
 # ─── DELETE /posts/{id} ─────────────────────────────────────────────────────
