@@ -207,8 +207,6 @@ werkzeug==1.0.1
     # via flask
 wsproto==0.15.0
     # via mitmproxy
-zstandard==0.14.1
-    # via mitmproxy
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
