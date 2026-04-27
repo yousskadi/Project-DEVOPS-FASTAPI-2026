@@ -65,6 +65,6 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ vars.DOCKER_HUB_USERNAME }}/fastapi-:latest
+          tags: ${{ vars.DOCKER_HUB_USERNAME }}/fastapi:latest
           cache-from: type=local,src=${{ runner.temp }}/.buildx-cache
           cache-to: type=local,dest=${{ runner.temp }}/.buildx-cache-new,mode=max
